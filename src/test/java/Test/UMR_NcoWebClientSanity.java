@@ -98,7 +98,7 @@ public class UMR_NcoWebClientSanity  extends Base {
 			userIds.add(Config.getInstance().getUMRChromeIdTest());
 			userIds.add(Config.getInstance().getUMRFirefoxIdTest());
 		}
-		 
+
 		for ( String userId: userIds ) {
 			int rc = NetsfereActivity.AccountCleanUp(userId);
 			if ( rc == 1 ) {
@@ -210,7 +210,7 @@ public class UMR_NcoWebClientSanity  extends Base {
 			try {
 				webWait20.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']/div[.//div[@displayname='"+firefoxUserDisplayName+"']]")));
 				webDriver.findElementByXPath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']/div[.//div[@displayname='"+firefoxUserDisplayName+"']]").click();
-					} catch (Exception e1) {
+			} catch (Exception e1) {
 				webDriver.navigate().refresh();
 				webWait120.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Welcome to NetSfere')]")));
 				webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(Keys.CONTROL,"a");
@@ -220,8 +220,8 @@ public class UMR_NcoWebClientSanity  extends Base {
 				webWait20.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']//div[4]/div[@displayname='"+firefoxUserDisplayName+"']")));			
 				webDriver.findElementByXPath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']//div[4]/div[@displayname='"+firefoxUserDisplayName+"']").click();
 			}
-			
-Thread.sleep(1000);
+
+			Thread.sleep(1000);
 			webWait5.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Create')]")));
 			webDriver.findElementByXPath("//span[contains(text(),'Create')]").click();
 			try {
@@ -265,7 +265,7 @@ Thread.sleep(1000);
 
 		System.out.println("Firefoxuser validates the created conversation");	
 		foxDriver.navigate().refresh();
-//		Thread.sleep(2000);
+		//		Thread.sleep(2000);
 		foxWait120.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Welcome to NetSfere')]")));
 
 		try {
@@ -312,8 +312,8 @@ Thread.sleep(1000);
 			Robot robot = new Robot();
 			Thread.sleep(1000);
 			if ( !NetsfereActivity.isMac()) {
-								NetsfereActivity.attachImage_win();
-//				NetsfereActivity.attachImage_win_Robot();
+				NetsfereActivity.attachImage_win();
+				//				NetsfereActivity.attachImage_win_Robot();
 			} else {
 				//TO-DO
 			}
@@ -381,9 +381,9 @@ Thread.sleep(1000);
 		webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[./input[@type='text']]")));
 		webDriver.findElementByXPath("//div[./input[@type='text']]").click();
 		webDriver.findElementByXPath("//input[@type='text']").sendKeys(Config.getInstance().getUMRFirefoxDisplayName());
-	webWait10.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='table-view']//div[@displayname='"+firefoxUserDisplayName+"']")));
+		webWait10.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='table-view']//div[@displayname='"+firefoxUserDisplayName+"']")));
 		webDriver.findElementByXPath("//div[@class='table-view']//div[@displayname='"+firefoxUserDisplayName+"']").click();
-	webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[text()='Call']/preceding-sibling::button[./span[@class='icon ion-android-call']]")));
+		webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[text()='Call']/preceding-sibling::button[./span[@class='icon ion-android-call']]")));
 		webDriver.findElementByXPath("//div[text()='Call']/preceding-sibling::button[./span[@class='icon ion-android-call']]").click();
 
 
@@ -471,7 +471,7 @@ Thread.sleep(1000);
 		System.out.println("Web User Create group conversation to initiate group call");		
 
 		try {
-		webDriver.findElementByXPath("//div[@class='sideBarMenuButton']//button/span[@class='icon ion-person-stalker']").click();
+			webDriver.findElementByXPath("//div[@class='sideBarMenuButton']//button/span[@class='icon ion-person-stalker']").click();
 			webWait20.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='text' and @item='contacts']/following-sibling::div/span[contains(text(),'Search Contacts')]")));
 			webDriver.findElementByXPath("//div[@class='sideBarMenuButton']//button/span[@class='icon ion-ios-chatbubble']").click();
 			webDriver.navigate().refresh();
@@ -485,19 +485,19 @@ Thread.sleep(1000);
 			webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@item='inviteContacts']")));
 			webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(firefoxUserDisplayName);	
 			webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(Keys.RETURN);
-//			Thread.sleep(5000);
+			//			Thread.sleep(5000);
 			webWait20.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']/div[.//div[@displayname='"+firefoxUserDisplayName+"']]")));
 			webDriver.findElementByXPath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']/div[.//div[@displayname='"+firefoxUserDisplayName+"']]").click();
-			
+
 			webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@item='inviteContacts']")));
 			webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(chromeUserDisplayName);	
 			webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(Keys.RETURN);	
 			webWait20.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']/div[.//div[@displayname='"+chromeUserDisplayName+"']]")));
 			webDriver.findElementByXPath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']/div[.//div[@displayname='"+chromeUserDisplayName+"']]").click();
 			Thread.sleep(1000);					
-			
-			
-							
+
+
+
 			webWait5.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Create')]")));
 			webDriver.findElementByXPath("//span[contains(text(),'Create')]").click();			
 			webWait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='screenOverlayText' and contains(text(),'Creating conversation...')]")));
@@ -586,12 +586,12 @@ Thread.sleep(1000);
 
 
 		webDriver.findElementByXPath("//span[@class='icon ion-ios-chatbubble']").click();
-//		//Webuser leaves the conversation		
-//		if ( NetsfereActivity.destroyConversation(webDriver, groupConversationTitle) ==0 ) {
-//			System.out.println("webuser Destroyed conversation :"+groupConversationTitle );			
-//		} else {
-//			System.out.println("webuser Destroyed conversation Failed :"+conversationTitle );			
-//		}	
+		//		//Webuser leaves the conversation		
+		//		if ( NetsfereActivity.destroyConversation(webDriver, groupConversationTitle) ==0 ) {
+		//			System.out.println("webuser Destroyed conversation :"+groupConversationTitle );			
+		//		} else {
+		//			System.out.println("webuser Destroyed conversation Failed :"+conversationTitle );			
+		//		}	
 		//		if ( NetsfereActivity.destroyConversation(webDriver, conversationTitle) ==0 ) {
 		//			System.out.println("webuser Destroyed conversation :"+conversationTitle );			
 		//		} else {
@@ -614,7 +614,7 @@ Thread.sleep(1000);
 					System.out.println("UMR Firefox User logout failed.");
 					foxDriver.quit();
 				}	
-				
+
 			}
 			if( chromeDriver != null ) {
 				if ( NetsfereActivity.WebLogout(chromeDriver) ==0 ) {
@@ -625,12 +625,12 @@ Thread.sleep(1000);
 					chromeDriver.quit();
 				}	
 			}
-				
-			
+
+
 		} catch ( Exception e) {
 			System.out.println("Unable to Logiut and quit");
 		}
-		
+
 		NetsfereActivity.killAllBrowserSessions();
 
 		System.out.println("=================================================================");

@@ -774,12 +774,36 @@ public class EU_NcoWebClientSanity  extends Base {
 		APIRequest.header("Content-Type","application/x-www-form-urlencoded");
 		APIRequest.header("authorization","Bearer {token}");
 
-		String email = Config.getInstance().getEUWebId();
+		String  webUserId = "";
+		String  webUserDisplayName = "";
+		String  chromeUserId = "";
+		String  chromeUserDisplayName = "";
+		String  firefoxUserId = "";
+		String  firefoxUserDisplayName = "";
+		
+		if( Config.getInstance().isDebug()) {
+			webUserId = Config.getInstance().getEUWebIdTest();
+			webUserDisplayName = Config.getInstance().getEUWebDisplayNameTest();
+			chromeUserId = Config.getInstance().getEUChromeIdTest();
+			chromeUserDisplayName = Config.getInstance().getEUChromeDisplayNameTest();
+			firefoxUserId =  Config.getInstance().getEUFirefoxIdTest();
+			firefoxUserDisplayName = Config.getInstance().getEUFirefoxDisplayNameTest();
+			
+		} else {
+			webUserId = Config.getInstance().getEUWebId();
+			webUserDisplayName = Config.getInstance().getEUWebDisplayName();
+			chromeUserId = Config.getInstance().getEUChromeId();
+			chromeUserDisplayName = Config.getInstance().getEUChromeDisplayName();
+			firefoxUserId =  Config.getInstance().getEUFirefoxId();
+			firefoxUserDisplayName = Config.getInstance().getEUFirefoxDisplayName();
+		}
+
+		String email = webUserId;
 		String udate = new SimpleDateFormat("dd-MM-yy-HHmmss").format(new java.util.Date());
 		String convTitle = "API : "+udate;
 		udate = new SimpleDateFormat("dd-MM-yy-HHmmss").format(new java.util.Date());
 		String msgText = "API Test Message - Sending message in newly created conversation :"+udate;
-		String participants = Config.getInstance().getEUFirefoxId();
+		String participants = firefoxUserId;
 		requestParams.put("email", email);
 		requestParams.put("password", "abcdefgh");
 		requestParams.put("convTitle", convTitle);

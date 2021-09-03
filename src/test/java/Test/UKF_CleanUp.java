@@ -21,15 +21,17 @@ public class UKF_CleanUp  extends Base {
 	@Test
 	public void CleanConversations() throws InterruptedException, IOException {
 
-		
-
 		List<String> userIds = new ArrayList<String>();
 		// UKF Users
-		userIds.add(Config.getInstance().getUKFWebId());
-		userIds.add(Config.getInstance().getUKFChromeId());
-		userIds.add(Config.getInstance().getUKFFirefoxId());
-
-		
+		if(!(Config.getInstance().isDebug())) {
+			userIds.add(Config.getInstance().getUKFWebId());
+			userIds.add(Config.getInstance().getUKFChromeId());
+			userIds.add(Config.getInstance().getUKFFirefoxId());
+		} else {
+			userIds.add(Config.getInstance().getUKFWebIdTest());
+			userIds.add(Config.getInstance().getUKFChromeIdTest());
+			userIds.add(Config.getInstance().getUKFFirefoxIdTest());
+		}
 		for ( String userId: userIds ) {
 			int rc = NetsfereActivity.AccountCleanUp(userId);
 			if ( rc == 1 ) {
@@ -38,8 +40,14 @@ public class UKF_CleanUp  extends Base {
 				System.out.println("Account Cleanup for :"+userId+ "   FAILED");
 			}
 		}
-		userIds.add(Config.getInstance().getUKFACPUserId());
-		ChromeDriver AcpDriver = NetsfereActivity.ACPLogin(Config.getInstance().getUKFACPUserId());
+		String UKFACPId = "";
+		if(!(Config.getInstance().isDebug())) {
+			UKFACPId = Config.getInstance().getUKFACPUserId();
+		} else {
+			UKFACPId = Config.getInstance().getUKFACPUserIdTest();
+		}
+		userIds.add(UKFACPId);
+		ChromeDriver AcpDriver = NetsfereActivity.ACPLogin(UKFACPId);
 		if ( AcpDriver != null) {
 			for ( String userId: userIds ) {
 				int rc = NetsfereActivity.ForceLogoutAllSessions(AcpDriver,userId );
@@ -54,7 +62,6 @@ public class UKF_CleanUp  extends Base {
 		if (AcpDriver != null) {
 			AcpDriver.close();
 		}
-
 	}
 }
 

@@ -1,6 +1,9 @@
 package Test;
 
 import org.testng.annotations.Test;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import org.testng.Assert;
 import java.io.FileOutputStream;
 
@@ -643,4 +646,130 @@ public class APAC_NcoWebClientsSanity extends Base {
 
 	}	
 
+	@SuppressWarnings("unchecked")
+	@JsonPropertyOrder({"email","password"})
+	@Test(priority=6)
+	
+	public void Netsfere_PASE_API() throws FileNotFoundException {
+		RestAssured.baseURI ="https://api-apse.netsfere.com";
+		RequestSpecification APIRequest = RestAssured.given();
+		//JSONObject requestParams = NetsfereActivity.APIObject();
+		//JSONObject requestParams = new JSONObject();
+		HashMap<String , String> requestParams = new HashMap<String, String>();
+		//APIRequest.header("Content-Type", "application/json");
+		APIRequest.header("Content-Type","application/x-www-form-urlencoded");
+		APIRequest.header("authorization","Bearer {token}");
+		
+		String  webUserId = "";
+		String  webUserDisplayName = "";
+		String  chromeUserId = "";
+		String  chromeUserDisplayName = "";
+		String  firefoxUserId = "";
+		String  firefoxUserDisplayName = "";
+
+		if( Config.getInstance().isDebug()) {
+			webUserId = Config.getInstance().getAPSEWebIdTest();
+			webUserDisplayName = Config.getInstance().getAPSEWebDisplayNameTest();
+			chromeUserId = Config.getInstance().getAPSEChromeIdTest();
+			chromeUserDisplayName = Config.getInstance().getAPSEChromeDisplayNameTest();
+			firefoxUserId =  Config.getInstance().getAPSEFirefoxIdTest();
+			firefoxUserDisplayName = Config.getInstance().getAPSEFirefoxDisplayNameTest();
+
+		} else {
+			webUserId = Config.getInstance().getAPSEWebId();
+			webUserDisplayName = Config.getInstance().getAPSEWebDisplayName();
+			chromeUserId = Config.getInstance().getAPSEChromeId();
+			chromeUserDisplayName = Config.getInstance().getAPSEChromeDisplayName();
+			firefoxUserId =  Config.getInstance().getAPSEFirefoxId();
+			firefoxUserDisplayName = Config.getInstance().getAPSEFirefoxDisplayName();
+		}
+
+		String email = webUserId;
+		String udate = new SimpleDateFormat("dd-MM-yy-HHmmss").format(new java.util.Date());
+		String convTitle = "API : "+udate;
+		udate = new SimpleDateFormat("dd-MM-yy-HHmmss").format(new java.util.Date());
+		String msgText = "API Test Message - Sending message in newly created conversation :"+udate;
+		String participants = firefoxUserId;
+		requestParams.put("email", email);
+		requestParams.put("password", "abcdefgh");
+		requestParams.put("convTitle", convTitle);
+		requestParams.put("msgText", msgText);
+		requestParams.put("participants", participants );
+		String bodyData ="";
+
+		for( String key : requestParams.keySet()) {
+			String value = requestParams.get(key).toString().trim();
+			//String value = requestParams.get(key).toString().trim().replaceAll(" ","20%");
+			bodyData += key.toString()+"="+value+"&" ;
+		}
+
+		System.out.println(bodyData);
+
+
+		//APIRequest.body(requestParams.toJSONString());
+		APIRequest.body(bodyData);
+		Response response = APIRequest.post("/send.php");
+		//Response response = APIRequest.body(requestParams.toJSONString()).post();
+		System.out.println(response.asString());
+		int statusCode = response.getStatusCode();
+		System.out.println("Return Code :"+statusCode);
+		if ( statusCode != 200) {
+			String errorMsg = response.getStatusLine();
+			System.out.println("error Message  : "+errorMsg);
+			Assert.assertEquals(statusCode, 200);
+		}
+		String RC_convId = response.jsonPath().getJsonObject("convId");
+		String RC_msgId = response.jsonPath().getJsonObject("msgId");
+
+		System.out.println("Created COnversation ID :"+RC_convId);
+		System.out.println("Message sent Message ID :"+RC_msgId);
+		
+		Assert.assertNotEquals(RC_convId, null);
+		Assert.assertNotEquals(RC_msgId, null);
+
+		///**********
+		// Sending message in exisitng conversation
+		//***********
+
+		HashMap<String , String> requestParams1 = new HashMap<String, String>();
+		requestParams1.put("email", email);
+		requestParams1.put("password", "abcdefgh");
+		requestParams1.put("convId", RC_convId);
+		udate = new SimpleDateFormat("dd-MM-yy-HHmmss").format(new java.util.Date());
+		msgText = "API Test Message -Sending message in exisitng conversation :"+udate;
+		requestParams1.put("msgText", msgText);
+
+		bodyData ="";
+
+		for( String key : requestParams1.keySet()) {
+			String value = requestParams1.get(key).toString().trim();
+			//				String value = requestParams.get(key).toString().trim().replaceAll(" ","20%");
+			bodyData += key.toString()+"="+value+"&" ;
+		}
+
+		System.out.println(bodyData);
+
+		APIRequest.body(bodyData);
+		response = APIRequest.post("/send.php");
+		//			Response response = APIRequest.body(requestParams.toJSONString()).post();
+		System.out.println(response.asString());
+		statusCode = response.getStatusCode();
+		System.out.println("Return Code :"+statusCode);
+		
+		if ( statusCode != 200) {
+			String errorMsg = response.getStatusLine();
+			System.out.println("error Message  : "+errorMsg);
+			Assert.assertEquals(statusCode, 200);
+		}
+		RC_convId = response.jsonPath().getJsonObject("convId");
+		RC_msgId = response.jsonPath().getJsonObject("msgId");
+
+		System.out.println("Created COnversation ID :"+RC_convId);
+		System.out.println("Message sent Message ID :"+RC_msgId);
+		
+		Assert.assertNotEquals(RC_convId, null);
+		Assert.assertNotEquals(RC_msgId, null);
+		Assert.assertEquals(statusCode, 200);
+		
+	}
 }
