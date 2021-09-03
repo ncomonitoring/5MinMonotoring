@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2021-09-03T10:23:59 IST" name="Default suite" finished-at="2021-09-03T10:26:48 IST" duration-ms="169053">
+    <groups>
+    </groups>
+    <test started-at="2021-09-03T10:23:59 IST" name="Default test" finished-at="2021-09-03T10:26:48 IST" duration-ms="169053">
+      <class name="Test.EU_CleanUp">
+        <test-method signature="CleanConversations()[pri:0, instance:Test.EU_CleanUp@1623b78d]" started-at="2021-09-03T10:23:59 IST" name="CleanConversations" finished-at="2021-09-03T10:26:48 IST" duration-ms="169027" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CleanConversations -->
+      </class> <!-- Test.EU_CleanUp -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
