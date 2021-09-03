@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<listeners>
+		<listener class-name="Test.Listner"></listener>
+	</listeners>
+
+	<test thread-count="5" name="Test">
+		<classes>
+			<class name="Test.MS2_NcoWebClientSanity" />
+			<class name="Test.APAC_NcoWebClientSanity" />
+			<class name="Test.APSE2_NCOWebClientSanity" />
+			<class name="Test.ZK_NcoWebClientSanity" />
+			<class name="Test.AM1_NcoWebClientSanity" />
+			<class name="Test.MS1_NcoWebClientSanity" />
+		</classes>
+
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
