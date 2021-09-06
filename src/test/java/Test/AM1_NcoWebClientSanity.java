@@ -116,7 +116,28 @@ public class AM1_NcoWebClientSanity extends Base {
 	@Test(priority=5)
 	public void AM1_Netsfere_Message_Call_Check() throws InterruptedException, IOException , AWTException {		
 		
-		System.out.println("Start Time : " + ( new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss").format(new java.util.Date())));		
+		System.out.println("Start Time : " + ( new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss").format(new java.util.Date())));	
+		
+		  HashMap<String , Integer> AM1Vault_OldData_map = new HashMap<String, Integer>();
+		    String AM1VaultId = "";
+			if( Config.getInstance().isDebug()) {
+				AM1VaultId = Config.getInstance().getAM1VaultId();
+			} else {
+				AM1VaultId = Config.getInstance().getAM1VaultIdTest() ;
+			}
+			
+			AM1Vault_OldData_map =  NetsfereActivity.getVaultData(AM1VaultId);
+			if(AM1Vault_OldData_map.get("RC")  == 0  || AM1Vault_OldData_map.get("RC")  == 2) {
+				System.out.println("Conversations Acrchived Count :" + AM1Vault_OldData_map.get("ConvCount"));
+				System.out.println("Message Archive Count :"+AM1Vault_OldData_map.get("MesgCount"));
+				System.out.println("Report Generated Count :"+AM1Vault_OldData_map.get("ReportCount") );
+//				System.out.println("Used Storage in MB :"+AM1Vault_OldData_map.get("UsedStorage"));
+				if(AM1Vault_OldData_map.get("RC")  == 2 ) {
+					System.out.println("Error in Logging out from Vault...");
+				}
+	 		} else if (AM1Vault_OldData_map.get("RC")  == 1 ) { 
+				System.out.println("Error in acccessing Vault....");			
+			}
 	  
 		NetsfereActivity.killAllBrowserSessions();	
 		
@@ -595,8 +616,52 @@ public class AM1_NcoWebClientSanity extends Base {
 			System.out.println("Unable to Logiut and quit");
 		}
 		
+
+		HashMap<String , Integer> AM1Vault_NewData_map = new HashMap<String, Integer>();	
+		AM1Vault_NewData_map = NetsfereActivity.getVaultData(AM1VaultId);
+		if(AM1Vault_NewData_map.get("RC")  == 0  || AM1Vault_NewData_map.get("RC")  == 2) {
+				System.out.println("Conversations Acrchived Count :" + AM1Vault_NewData_map.get("ConvCount"));
+				System.out.println("Message Archive Count :"+AM1Vault_NewData_map.get("MesgCount"));
+				System.out.println("Report Generated Count :"+AM1Vault_NewData_map.get("ReportCount") );
+//				System.out.println("Used Storage in MB :"+AM1Vault_NewData_map.get("UsedStorage"));
+				if(AM1Vault_NewData_map.get("RC")  == 2 ) {
+					System.out.println("Error in Logging out from Vault...");
+				}
+		} else if (AM1Vault_NewData_map.get("RC")  == 1 ) { 
+			System.out.println("Error in acccessing EPPD Vault....");
+		}
+		
+		if ( AM1Vault_NewData_map.get("MesgCount") > AM1Vault_OldData_map.get("MesgCount") ) {
+			System.out.println("EPPD Archived message count has increased...");
+			System.out.println("EPPD Vault test Case is success.");
+		} else {
+			System.out.println("No Increase in EPPD Archived message count ...");
+			System.out.println("EPPD Vault test Case is Failed.");
+		}
+		if ( AM1Vault_NewData_map.get("MesgCount") - AM1Vault_OldData_map.get("MesgCount") >1 ) {
+			System.out.println("EPPD Archived attachments increased...");
+			
+		} else {
+			System.out.println("Some Issue in archiving Attachments in  EPPD");
+		}
+		if ( AM1Vault_NewData_map.get("ConvCount") > AM1Vault_OldData_map.get("ConvCount")) {
+			System.out.println("EPPD Archived COnversations count has increased...");
+		} else {
+			System.out.println("No Increase in EPPD Archived COnversations count ...");
+		}		
+//		if (AM1Vault_NewData_map.get("ReportCount") > AM1Vault_OldData_map.get("ReportCount")) {
+//			System.out.println("EPPD Archive Reports Generated count has increased...");			
+//		} else {
+//			System.out.println("No Increase in EPPD Vault Reports count...");
+//		}
+//		if ( AM1Vault_NewData_map.get("UsedStorage")> AM1Vault_OldData_map.get("UsedStorage")) {
+//			System.out.println("EPPD Vault Storage Usage Increased ....");
+//		} else {
+//			System.out.println("NO Increase in AM1 Vault Storage Usage...");
+//		}
+		
 			System.out.println("Time at the END of the Test Execution : " + ( new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss").format(new java.util.Date())));
-			System.out.println("************* AM1 REGION | Vault check | SUCCESS ************");
+			System.out.println("************* EPPD  REGION | Vault check | SUCCESS ************");
 			
 			
 		}	

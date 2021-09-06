@@ -183,6 +183,7 @@ public class Config {
 	private static final String am1FirefoxId = "am1FirefoxId";
 	private static final String am1FirefoxDisplayName = "am1FirefoxDisplayName";
 	private static final String am1ACPUserId = "am1ACPUserId";
+	private static final String am1VaultId = "am1VaultId";
 
 
 
@@ -196,6 +197,7 @@ public class Config {
 	private static final String am1FirefoxIdTest = "am1FirefoxIdTest";
 	private static final String am1FirefoxDisplayNameTest = "am1FirefoxDisplayNameTest";
 	private static final String am1ACPUserIdTest = "am1ACPUserIdTest";
+	private static final String am1VaultIdTest = "am1VaultIdTest";
 
 	//====================================
 	// **** MRI Cluster ****
@@ -822,6 +824,9 @@ public class Config {
 	public String getAM1ACPUserId() {
 		return credentials.getProperty(am1ACPUserId);
 	}
+	public String getAM1VaultId() {
+		return credentials.getProperty(am1VaultId);
+	}
 
 
 	//====================================
@@ -847,6 +852,10 @@ public class Config {
 	}
 	public String getAM1ACPUserIdTest() {
 		return credentials.getProperty(am1ACPUserIdTest);
+	}
+	
+	public String getAM1VaultIdTest() {
+		return credentials.getProperty(am1VaultIdTest);
 	}
 
 	//====================================

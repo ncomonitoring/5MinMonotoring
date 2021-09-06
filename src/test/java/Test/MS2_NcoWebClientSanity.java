@@ -122,14 +122,14 @@ public class MS2_NcoWebClientSanity  extends Base {
 		System.out.println("Start Time : " + ( new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss").format(new java.util.Date())));	
 		
 	    HashMap<String , Integer> MS2Vault_OldData_map = new HashMap<String, Integer>();
-	    String EUVaultId = "";
+	    String MS2VaultId = "";
 		if( Config.getInstance().isDebug()) {
-			EUVaultId = Config.getInstance().getMs2VaultId();
+			MS2VaultId = Config.getInstance().getMs2VaultId();
 		} else {
-			EUVaultId = Config.getInstance().getMs2VaultIdTest() ;
+			MS2VaultId = Config.getInstance().getMs2VaultIdTest() ;
 		}
 		
-		MS2Vault_OldData_map =  NetsfereActivity.getVaultData(EUVaultId);
+		MS2Vault_OldData_map =  NetsfereActivity.getVaultData(MS2VaultId);
 		if(MS2Vault_OldData_map.get("RC")  == 0  || MS2Vault_OldData_map.get("RC")  == 2) {
 			System.out.println("Conversations Acrchived Count :" + MS2Vault_OldData_map.get("ConvCount"));
 			System.out.println("Message Archive Count :"+MS2Vault_OldData_map.get("MesgCount"));
@@ -621,7 +621,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 		}
 		
 			HashMap<String , Integer> MS2Vault_NewData_map = new HashMap<String, Integer>();	
-			MS2Vault_NewData_map = NetsfereActivity.getVaultData(EUVaultId);
+			MS2Vault_NewData_map = NetsfereActivity.getVaultData(MS2VaultId);
 			if(MS2Vault_NewData_map.get("RC")  == 0  || MS2Vault_NewData_map.get("RC")  == 2) {
 					System.out.println("Conversations Acrchived Count :" + MS2Vault_NewData_map.get("ConvCount"));
 					System.out.println("Message Archive Count :"+MS2Vault_NewData_map.get("MesgCount"));
