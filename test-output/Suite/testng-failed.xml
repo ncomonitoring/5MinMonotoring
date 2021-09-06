@@ -6,6 +6,11 @@
   </listeners>
   <test thread-count="5" name="Test(failed)">
     <classes>
+      <class name="Test.UMR_NcoWebClientSanity">
+        <methods>
+          <include name="UMR_Netsfere_Message_Call_Check"/>
+        </methods>
+      </class> <!-- Test.UMR_NcoWebClientSanity -->
       <class name="Test.DIMAS_NcoWebClientSanity">
         <methods>
           <include name="Dimas_Netsfere_Message_Call_Check"/>
@@ -17,17 +22,18 @@
           <include name="EU_Netsfere_Message_Call_Check"/>
         </methods>
       </class> <!-- Test.EU_NcoWebClientSanity -->
+      <class name="Test.UKF_NcoWebClientSanity">
+        <methods>
+          <include name="UKF_Netsfere_Message_Call_Check"/>
+          <include name="UKF_Netsfere_HDCall_Check"/>
+        </methods>
+      </class> <!-- Test.UKF_NcoWebClientSanity -->
       <class name="Test.MRI_NCOWebClientSanity">
         <methods>
           <include name="MRI_Netsfere_HDCall_Check"/>
           <include name="MRI_Netsfere_Message_Call_Check"/>
         </methods>
       </class> <!-- Test.MRI_NCOWebClientSanity -->
-      <class name="Test.UKF_NcoWebClientSanity">
-        <methods>
-          <include name="UKF_Netsfere_Message_Call_Check"/>
-        </methods>
-      </class> <!-- Test.UKF_NcoWebClientSanity -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->
