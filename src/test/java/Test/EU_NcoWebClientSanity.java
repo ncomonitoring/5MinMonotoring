@@ -113,9 +113,9 @@ public class EU_NcoWebClientSanity  extends Base {
 		HashMap<String , Integer> EUVault_OldData_map = new HashMap<String, Integer>();		
 		String EUVaultId = "";
 		if( Config.getInstance().isDebug()) {
-			EUVaultId = Config.getInstance().getEUVaultId();
+			EUVaultId = Config.getInstance().getEUVaultIdTest();
 		} else {
-			EUVaultId = Config.getInstance().getEUVaultIdTest() ;
+			EUVaultId = Config.getInstance().getEUVaultId() ;
 		}
 		EUVault_OldData_map =  NetsfereActivity.getVaultData(EUVaultId);
 		if(EUVault_OldData_map.get("RC")  == 0  || EUVault_OldData_map.get("RC")  == 2) {

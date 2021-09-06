@@ -115,9 +115,9 @@ public class APAC_NcoWebClientsSanity extends Base {
 		HashMap<String , Integer> APSEVault_OldData_map = new HashMap<String, Integer>();	
 		String APSEVaultId = "";
 		if( Config.getInstance().isDebug()) {
-			APSEVaultId = Config.getInstance().getAPSEVaultId();
+			APSEVaultId = Config.getInstance().getAPSEVaultIdTest();
 		} else {
-			APSEVaultId = Config.getInstance().getAPSEVaultIdTest() ;
+			APSEVaultId = Config.getInstance().getAPSEVaultId() ;
 		}
 		APSEVault_OldData_map =  NetsfereActivity.getVaultData(APSEVaultId);
 		//		APSEVault_OldData_map =  NetsfereActivity.getVaultData(Config.getInstance().getAPSEVaultId());

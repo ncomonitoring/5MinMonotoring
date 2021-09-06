@@ -121,9 +121,9 @@ public class AM1_NcoWebClientSanity extends Base {
 		  HashMap<String , Integer> AM1Vault_OldData_map = new HashMap<String, Integer>();
 		    String AM1VaultId = "";
 			if( Config.getInstance().isDebug()) {
-				AM1VaultId = Config.getInstance().getAM1VaultId();
+				AM1VaultId = Config.getInstance().getAM1VaultIdTest();
 			} else {
-				AM1VaultId = Config.getInstance().getAM1VaultIdTest() ;
+				AM1VaultId = Config.getInstance().getAM1VaultId() ;
 			}
 			
 			AM1Vault_OldData_map =  NetsfereActivity.getVaultData(AM1VaultId);
