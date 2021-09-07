@@ -124,9 +124,9 @@ public class MS2_NcoWebClientSanity  extends Base {
 	    HashMap<String , Integer> MS2Vault_OldData_map = new HashMap<String, Integer>();
 	    String MS2VaultId = "";
 		if( Config.getInstance().isDebug()) {
-			MS2VaultId = Config.getInstance().getMs2VaultId();
+			MS2VaultId = Config.getInstance().getMs2VaultIdTest();
 		} else {
-			MS2VaultId = Config.getInstance().getMs2VaultIdTest() ;
+			MS2VaultId = Config.getInstance().getMs2VaultId() ;
 		}
 		
 		MS2Vault_OldData_map =  NetsfereActivity.getVaultData(MS2VaultId);

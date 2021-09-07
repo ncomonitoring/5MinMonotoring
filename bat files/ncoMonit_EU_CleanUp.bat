@@ -1,6 +1,7 @@
 D:
 
-cd D:\Murali\NCO-Monitoring
+::cd D:\Murali\NCO-Monitoring
+cd D:\Git-NcoMonitoring\5MinMonotoring
 
 mvn test -Dsurefire.suiteXmlFiles=NS_EU_CleanUp.xml
 

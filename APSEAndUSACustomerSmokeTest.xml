@@ -9,7 +9,7 @@
 		<classes>
 			<class name="Test.MS2_NcoWebClientSanity" />
 			<class name="Test.APAC_NcoWebClientSanity" />
-			<class name="Test.APSE2_NCOWebClientSanity" />
+			<class name="Test.APSE2_NcoWebClientSanity" />
 			<class name="Test.ZK_NcoWebClientSanity" />
 			<class name="Test.AM1_NcoWebClientSanity" />
 			<class name="Test.MS1_NcoWebClientSanity" />

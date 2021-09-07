@@ -68,7 +68,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.*;
 
 
-public class APAC_NcoWebClientsSanity extends Base {
+public class APAC_NcoWebClientSanity extends Base {
 
 
 	//	@BeforeTest
