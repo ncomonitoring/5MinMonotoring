@@ -2,16 +2,16 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2021-09-08T13:27:42 IST" name="Default suite" finished-at="2021-09-08T13:28:22 IST" duration-ms="39383">
+  <suite started-at="2021-09-08T16:12:26 IST" name="Suite" finished-at="2021-09-08T16:13:03 IST" duration-ms="37892">
     <groups>
     </groups>
-    <test started-at="2021-09-08T13:27:42 IST" name="Default test" finished-at="2021-09-08T13:28:22 IST" duration-ms="39383">
+    <test started-at="2021-09-08T16:12:26 IST" name="Test" finished-at="2021-09-08T16:13:03 IST" duration-ms="37892">
       <class name="Test.NS_URLHealthCheck">
-        <test-method signature="Netsfere_URL_HealthCheck()[pri:1, instance:Test.NS_URLHealthCheck@1623b78d]" started-at="2021-09-08T13:27:42 IST" name="Netsfere_URL_HealthCheck" finished-at="2021-09-08T13:28:22 IST" duration-ms="39347" status="PASS">
+        <test-method signature="Netsfere_URL_HealthCheck()[pri:1, instance:Test.NS_URLHealthCheck@1623b78d]" started-at="2021-09-08T16:12:26 IST" name="Netsfere_URL_HealthCheck" finished-at="2021-09-08T16:13:03 IST" duration-ms="37863" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Netsfere_URL_HealthCheck -->
       </class> <!-- Test.NS_URLHealthCheck -->
-    </test> <!-- Default test -->
-  </suite> <!-- Default suite -->
+    </test> <!-- Test -->
+  </suite> <!-- Suite -->
 </testng-results>

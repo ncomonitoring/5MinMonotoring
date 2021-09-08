@@ -1065,9 +1065,7 @@ public class Config {
 	public String geteppdVaultUrl() {
 		return credentials.getProperty(eppdVaultUrl);
 	}
-	public String getapse2Url() {
-		return credentials.getProperty(apse2Url);
-	}
+	
 	public String getacpUrl() {
 		return credentials.getProperty(acpUrl);
 	}
@@ -1079,6 +1077,9 @@ public class Config {
 	}
 	public String getapse1Url() {
 		return credentials.getProperty(apse1Url);
+	}
+	public String getapse2Url() {
+		return credentials.getProperty(apse2Url);
 	}
 	public String getms7Url() {
 		return credentials.getProperty(ms7Url);
