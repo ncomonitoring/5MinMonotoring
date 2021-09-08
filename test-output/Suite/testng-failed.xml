@@ -1,39 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
-  <listeners>
-    <listener class-name="Test.Listner"/>
-  </listeners>
   <test thread-count="5" name="Test(failed)">
     <classes>
-      <class name="Test.UMR_NcoWebClientSanity">
+      <class name="Test.NS_URLHealthCheck">
         <methods>
-          <include name="UMR_Netsfere_Message_Call_Check"/>
+          <include name="Netsfere_URL_HealthCheck"/>
         </methods>
-      </class> <!-- Test.UMR_NcoWebClientSanity -->
-      <class name="Test.DIMAS_NcoWebClientSanity">
-        <methods>
-          <include name="Dimas_Netsfere_Message_Call_Check"/>
-        </methods>
-      </class> <!-- Test.DIMAS_NcoWebClientSanity -->
-      <class name="Test.EU_NcoWebClientSanity">
-        <methods>
-          <include name="Netsfere_EU_API"/>
-          <include name="EU_Netsfere_Message_Call_Check"/>
-        </methods>
-      </class> <!-- Test.EU_NcoWebClientSanity -->
-      <class name="Test.UKF_NcoWebClientSanity">
-        <methods>
-          <include name="UKF_Netsfere_Message_Call_Check"/>
-          <include name="UKF_Netsfere_HDCall_Check"/>
-        </methods>
-      </class> <!-- Test.UKF_NcoWebClientSanity -->
-      <class name="Test.MRI_NCOWebClientSanity">
-        <methods>
-          <include name="MRI_Netsfere_HDCall_Check"/>
-          <include name="MRI_Netsfere_Message_Call_Check"/>
-        </methods>
-      </class> <!-- Test.MRI_NCOWebClientSanity -->
+      </class> <!-- Test.NS_URLHealthCheck -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

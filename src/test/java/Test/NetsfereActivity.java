@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.http.params.CoreConnectionPNames;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -433,6 +434,7 @@ public class NetsfereActivity  extends Base{
 	public static  HashMap<String , List<String>> Netsfere_URL_HealthCheck(HashMap<String, String> Server_URL_MAP) throws FileNotFoundException {
 
 		RequestSpecification httpRequest = RestAssured.given();
+		httpRequest.relaxedHTTPSValidation();
 		HashMap<String, List<String>> URL_RESPONSE = new HashMap<String, List<String>>();
 		int statusCode = 0;
 		String statusText = "";

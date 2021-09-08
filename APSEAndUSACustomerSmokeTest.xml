@@ -7,6 +7,7 @@
 
 	<test thread-count="5" name="Test">
 		<classes>
+			<class name="Test.NS_URLHealthCheck" />
 			<class name="Test.MS2_NcoWebClientSanity" />
 			<class name="Test.APAC_NcoWebClientSanity" />
 			<class name="Test.APSE2_NcoWebClientSanity" />
