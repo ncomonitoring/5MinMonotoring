@@ -72,23 +72,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.*;
 
 public class MS2_NcoWebClientSanity  extends Base {
-
-
-	@BeforeClass
-	public void precleanup() throws IOException, InterruptedException {
-		NetsfereActivity.killAllBrowserSessions();
-		String udate = new SimpleDateFormat("dd-MM-yy-HHmmss").format(new java.util.Date());
-		//		String proj_dir = System.getProperty("user.dir");
-		System.setOut(new PrintStream(new FileOutputStream("\\Y:\\NS_Automon_logs\\"+"Monitoring2-" + udate +".txt")));
-		//		System.setOut(new PrintStream(new FileOutputStream("Monitoring-" + udate +".txt")));
-		System.out.println("Output File Created");
-	}
-
-	//	@BeforeTest
-	public void outputfile() throws IOException, InterruptedException {
-		NetsfereActivity.killAllBrowserSessions();
-	}
-
+	
 	@SuppressWarnings({ "rawtypes", "unused", "deprecation" })	
 	//	@Test(priority=4)
 	public void MS2_Netsfere_Cleanup() throws InterruptedException, IOException {

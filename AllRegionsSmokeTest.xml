@@ -7,18 +7,18 @@
 
 	<test thread-count="5" name="Test">
 		<classes>
-			<class name="Test.Netsfere_URL_HealthCheck" />
-			 
-			<class name="Test.MS2_NcoWebClientSanity" /> 
-			<class name="Test.APAC_NcoWebClientsSanity" /> 
-			<class name="Test.APSE2_NcoWebClientsSanity" /> 
-			<class name="Test.MS1_NcoWebClientSanity" /> 
-			<class name="Test.AM1_NcoWebClientSanity" /> 
+			<class name="Test.TestSetUp" />
+			<class name="Test.NS_URLHealthCheck" />
+			<class name="Test.MS2_NcoWebClientSanity" />
+			<class name="Test.APAC_NcoWebClientSanity" />
+			<class name="Test.APSE2_NcoWebClientSanity" />
+			<class name="Test.AM1_NcoWebClientSanity" />
+			<class name="Test.MS1_NcoWebClientSanity" />
 			<class name="Test.EU_NcoWebClientSanity" />
+			<class name="Test.MRI_NCOWebClientSanity" />
 			<class name="Test.UMR_NcoWebClientSanity" />
 			<class name="Test.DIMAS_NcoWebClientSanity" />
-			<class name="Test.UKF_NcoWebClientSanity" />
-			<class name="Test.MRI_NCOWebClientSanity" />
+			<class name="Test.UKF_NcoWebClientSanity"/>
 			<class name="Test.ZK_NcoWebClientSanity" />
 		</classes>
 
