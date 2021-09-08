@@ -24,6 +24,7 @@ public class Config {
 	private static final String GmailUserID = "gmailId";
 	private static final String GmailPassword = "gmailPasswd";
 	private static final String domain = "netsfere_domain";
+	private static final String executionRegion = "executionRegion";
 	//	private static final String region = "region";
 	//	private static final String ChromeDriver = "chromedriverpath";	
 
@@ -384,7 +385,9 @@ public class Config {
 	public String getSignupDomain() {
 		return credentials.getProperty(domain);
 	}
-
+	public String getExecutionRegion() {
+		return credentials.getProperty(executionRegion);
+	}
 
 
 	//====================================
