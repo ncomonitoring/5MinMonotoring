@@ -73,26 +73,26 @@ import java.awt.event.*;
 
 public class MS2_NcoWebClientSanity  extends Base {
 
-	
+
 	@BeforeClass
 	public void precleanup() throws IOException, InterruptedException {
 		NetsfereActivity.killAllBrowserSessions();
 		String udate = new SimpleDateFormat("dd-MM-yy-HHmmss").format(new java.util.Date());
-//		String proj_dir = System.getProperty("user.dir");
+		//		String proj_dir = System.getProperty("user.dir");
 		System.setOut(new PrintStream(new FileOutputStream("\\Y:\\NS_Automon_logs\\"+"Monitoring2-" + udate +".txt")));
-//		System.setOut(new PrintStream(new FileOutputStream("Monitoring-" + udate +".txt")));
+		//		System.setOut(new PrintStream(new FileOutputStream("Monitoring-" + udate +".txt")));
 		System.out.println("Output File Created");
 	}
-	
-//	@BeforeTest
+
+	//	@BeforeTest
 	public void outputfile() throws IOException, InterruptedException {
 		NetsfereActivity.killAllBrowserSessions();
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unused", "deprecation" })	
-//	@Test(priority=4)
+	//	@Test(priority=4)
 	public void MS2_Netsfere_Cleanup() throws InterruptedException, IOException {
-	
+
 		List<String> userIds = new ArrayList<String>();
 		if(!(Config.getInstance().isDebug())) {
 			userIds.add(Config.getInstance().getMs2WebId());
@@ -103,55 +103,55 @@ public class MS2_NcoWebClientSanity  extends Base {
 			userIds.add(Config.getInstance().getMs2ChromeIdTest());
 			userIds.add(Config.getInstance().getMs2FirefoxIdTest());
 		}
-	 
+
 		for ( String userId: userIds ) {
-				int rc = NetsfereActivity.AccountCleanUp(userId);
-				if ( rc == 1 ) {
-					System.out.println("Account Cleanup for :"+userId+ "   SUCCESS");
-				} else {
-					System.out.println("Account Cleanup for :"+userId+ "   FAILED");
-				}
+			int rc = NetsfereActivity.AccountCleanUp(userId);
+			if ( rc == 1 ) {
+				System.out.println("Account Cleanup for :"+userId+ "   SUCCESS");
+			} else {
+				System.out.println("Account Cleanup for :"+userId+ "   FAILED");
+			}
 		}
 		NetsfereActivity.killAllBrowserSessions();
-	    System.out.println("MS2 Cleanup has been completed: Success*******.");
+		System.out.println("MS2 Cleanup has been completed: Success*******.");
 	}
-	
+
 	@Test(priority=5)
 	public void MS2_Netsfere_Message_Call_Check() throws InterruptedException, IOException , AWTException {		
-		
+
 		System.out.println("Start Time : " + ( new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss").format(new java.util.Date())));	
-		
-	    HashMap<String , Integer> MS2Vault_OldData_map = new HashMap<String, Integer>();
-	    String MS2VaultId = "";
+
+		HashMap<String , Integer> MS2Vault_OldData_map = new HashMap<String, Integer>();
+		String MS2VaultId = "";
 		if( Config.getInstance().isDebug()) {
 			MS2VaultId = Config.getInstance().getMs2VaultIdTest();
 		} else {
 			MS2VaultId = Config.getInstance().getMs2VaultId() ;
 		}
-		
+
 		MS2Vault_OldData_map =  NetsfereActivity.getVaultData(MS2VaultId);
 		if(MS2Vault_OldData_map.get("RC")  == 0  || MS2Vault_OldData_map.get("RC")  == 2) {
 			System.out.println("Conversations Acrchived Count :" + MS2Vault_OldData_map.get("ConvCount"));
 			System.out.println("Message Archive Count :"+MS2Vault_OldData_map.get("MesgCount"));
 			System.out.println("Report Generated Count :"+MS2Vault_OldData_map.get("ReportCount") );
-//			System.out.println("Used Storage in MB :"+MS2Vault_OldData_map.get("UsedStorage"));
+			//			System.out.println("Used Storage in MB :"+MS2Vault_OldData_map.get("UsedStorage"));
 			if(MS2Vault_OldData_map.get("RC")  == 2 ) {
 				System.out.println("Error in Logging out from Vault...");
 			}
- 		} else if (MS2Vault_OldData_map.get("RC")  == 1 ) { 
+		} else if (MS2Vault_OldData_map.get("RC")  == 1 ) { 
 			System.out.println("Error in acccessing Vault....");			
 		}
-//		NetsfereActivity.killAllBrowserSessions();	
-		
+		//		NetsfereActivity.killAllBrowserSessions();	
+
 		System.out.println("MS2 REGION - Basic health checks started..."); 		
-		
+
 		String  webUserId = "";
 		String  webUserDisplayName = "";
 		String  chromeUserId = "";
 		String  chromeUserDisplayName = "";
 		String  firefoxUserId = "";
 		String  firefoxUserDisplayName = "";
-		
+
 		if( Config.getInstance().isDebug()) {
 			webUserId = Config.getInstance().getMs2WebIdTest();
 			webUserDisplayName = Config.getInstance().getMs2WebDisplayNameTest();
@@ -159,7 +159,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 			chromeUserDisplayName = Config.getInstance().getMs2ChromeDisplayNameTest();
 			firefoxUserId =  Config.getInstance().getMs2FirefoxIdTest();
 			firefoxUserDisplayName = Config.getInstance().getMs2FirefoxDisplayNameTest();
-			
+
 		} else {
 			webUserId = Config.getInstance().getMs2WebId();
 			webUserDisplayName = Config.getInstance().getMs2WebDisplayName();
@@ -178,20 +178,20 @@ public class MS2_NcoWebClientSanity  extends Base {
 		WebDriverWait webWait30 = new WebDriverWait(webDriver, 30);
 		WebDriverWait webWait120 = new WebDriverWait(webDriver, 120);
 		JavascriptExecutor jsweb = (JavascriptExecutor) webDriver;
-		
+
 		int rc = NetsfereActivity.webClientLogin(webDriver, webUserId);		
 		if( rc != 0 ) {
 			System.out.println("ERROR -netsfere Login page Not Loaded. Pls Check Internet Connection...");	        
 			System.out.println("exiting the programe...");			
 			webDriver.close();
 			Assert.assertFalse(true,"Error While Logging in to MS2 Web");
-	        System.exit(0);
+			System.exit(0);
 		}	
-		
+
 		//Launch browser and login to netsfere with firefox user		
 		System.out.println("Login to Firefoxuser...");
 		ChromeDriver foxDriver = chromeDriverInitialize();
-//		Thread.sleep(3000);
+		//		Thread.sleep(3000);
 		String firefoxWindow = foxDriver.getWindowHandle();
 		WebDriverWait foxWait5 = new WebDriverWait(foxDriver, 5);
 		WebDriverWait foxWait10 = new WebDriverWait(foxDriver,10);
@@ -200,29 +200,29 @@ public class MS2_NcoWebClientSanity  extends Base {
 		WebDriverWait foxWait120 = new WebDriverWait(foxDriver, 120);
 		foxDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		JavascriptExecutor jsfirefox = (JavascriptExecutor) foxDriver;
-		
+
 		rc = NetsfereActivity.webClientLogin(foxDriver, firefoxUserId);		
 		if( rc != 0 ) {
 			System.out.println("ERROR -netsfere Login page Not Loaded. Pls Check Internet Connection...");	        
 			System.out.println("exiting the programe...");
 			webDriver.close();
 			Assert.assertFalse(true,"Error While Logging in to MS2 Firefox");
-	        System.exit(0);
+			System.exit(0);
 		}	
-	
+
 		System.out.println("TIme at both user Login : "+ ( new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss").format(new java.util.Date())));
 		// ******************************************************************************
 		// Creating a conversation from Webuser to Firefoxuser and sending message in it.
 		// *******************************************************************************
-		
+
 		String conversationTitle = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date());
 		System.out.println("ChromMS2ser Starting Conversation With Firefoxuser.");
 		String WebGroupConversationTitle = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()); 
 		String Message1 = "";
 		String Message2 = "";
-		
+
 		try {
-			
+
 			webDriver.findElementByXPath("//button[@title='Start Conversation']").click();
 			webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Create')]")));		
 			webDriver.findElementByXPath("//div/input[contains(@class,'namegenTitleReplace')]").click();
@@ -242,7 +242,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 				System.out.println("Webuser Unable to create conversation with Firefoxuser.");
 				Assert.assertFalse(true,"Error MS2 WebUser Unable to Create COnversation with MS2 Firefox User");
 			}
-			
+
 			// Check if created COnversation Exist.
 			try {
 				webDriver.findElementByXPath("//button[@title='Start Conversation']/../div/input").sendKeys(conversationTitle);					
@@ -273,23 +273,23 @@ public class MS2_NcoWebClientSanity  extends Base {
 			System.out.println("Webuser Unable to create conversation with Firefoxuser.");
 			Assert.assertFalse(true,"Error MS2 WebUser Unable to Create COnversation with MS2 Firefox User");
 		}		
-		
+
 		System.out.println("Firefoxuser validates the created conversation");	
 		foxDriver.navigate().refresh();
 		Thread.sleep(2000);
-	
+
 		try {
 			foxDriver.findElementByXPath("//button[@title='Start Conversation']/../div/input").sendKeys(conversationTitle);			
 			foxWait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='scrollbox']//div[@class='table-view']/div[2]//div[contains(text(),'"+conversationTitle+"')]")));			
 		} catch (Exception e) {
-				System.out.println("Firefoxuser did not get the conversation created by webUser.");
-				if ( foxDriver.findElementByXPath("//div[@class='scrollbox']//div[@class='table-view']/div[2]").getText().contains("No Conversations Matching Search")) {
-					foxDriver.findElementByXPath("//button//span[@class='material-icons']").click();
-					foxDriver.navigate().refresh();
-					Thread.sleep(2000);
-					foxDriver.findElementByXPath("//button[@title='Start Conversation']/../div/input").sendKeys(conversationTitle);						
-					foxWait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='scrollbox']//div[@class='table-view']/div[2]//div[contains(text(),'"+conversationTitle+"')]")));											
-				}
+			System.out.println("Firefoxuser did not get the conversation created by webUser.");
+			if ( foxDriver.findElementByXPath("//div[@class='scrollbox']//div[@class='table-view']/div[2]").getText().contains("No Conversations Matching Search")) {
+				foxDriver.findElementByXPath("//button//span[@class='material-icons']").click();
+				foxDriver.navigate().refresh();
+				Thread.sleep(2000);
+				foxDriver.findElementByXPath("//button[@title='Start Conversation']/../div/input").sendKeys(conversationTitle);						
+				foxWait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='scrollbox']//div[@class='table-view']/div[2]//div[contains(text(),'"+conversationTitle+"')]")));											
+			}
 		}
 		try {
 			foxDriver.findElementByXPath("//div[@class='scrollbox']//div[@class='table-view']/div[2]//div[contains(text(),'"+conversationTitle+"')]").click();
@@ -297,14 +297,14 @@ public class MS2_NcoWebClientSanity  extends Base {
 			System.out.println("Conversation created by Webuser with Firefoxuser exists on Firefoxuser side.");			
 			foxWait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='bubbleWrap']//div//span//span[contains(text(),'"+Message1+"')]")));
 			System.out.println("Message Received by Firefoxuser ");
-		
+
 		} catch(Exception e) {
 			System.out.println("ERROR- Conversation created by Webuser with Firefoxuser does not exists on Firefoxuser side Or Firefoxuser did not receive the message sent by ChromMS2ser.");
 			Assert.assertFalse(true,"ERROR - MS2 Firefox user did not get the message");
 		}
-		
-		
-		
+
+
+
 		//******************************
 		//  Attachment in Conversation 
 		//******************************
@@ -322,7 +322,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 			Robot robot = new Robot();
 			Thread.sleep(1000);
 			if ( !NetsfereActivity.isMac()) {
-//				NetsfereActivity.attachImage_win();
+				//				NetsfereActivity.attachImage_win();
 				NetsfereActivity.attachImage_win_Robot();
 			} else {
 				//TO-DO
@@ -342,11 +342,11 @@ public class MS2_NcoWebClientSanity  extends Base {
 			System.out.println("ERROR -Firefoxuser Unable to Attach Image in Conversation...");
 			Assert.assertFalse(true,"ERROR - Firefox User Unable to send attachment. ");
 		}		
-			
+
 		// Firefoxuser to assert the sent Image. 
-				
+
 		try {				
-			
+
 			foxWait120.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='bubbleWrap'][.//div[contains(@style,'blob')]]/following-sibling::div/div//span[contains(@class,'fa fa-check')]")));
 			List<WebElement> elems3 = foxDriver.findElementsByXPath("//div[@class='bubbleWrap'][.//div[contains(@style,'blob')]]/following-sibling::div/div//span[contains(@class,'fa fa-check')]");
 			if(elems3.size() > 0) {
@@ -377,30 +377,30 @@ public class MS2_NcoWebClientSanity  extends Base {
 			Assert.assertFalse(true,"ERROR - WebUser Didn't receive the attachment. ");
 		}
 
-	
-	
+
+
 		//******************************
 		//  HD 1-1 Call 
 		//******************************
 
-		
+
 		// Webuser make a call to webMS2ser2..
 		System.out.println("HD call test case execution started: from webUser to foxUser ");
-	
+
 		webDriver.findElementByXPath("//span[@class='icon ion-person-stalker']").click();
-//		webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='material-icons' and contains(text(),'search')]/../../..//input")));
+		//		webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='material-icons' and contains(text(),'search')]/../../..//input")));
 		webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[./input[@type='text']]")));
 		webDriver.findElementByXPath("//div[./input[@type='text']]").click();
-//		webDriver.findElementByXPath("//div[./input[@type='text']]").clear();
+		//		webDriver.findElementByXPath("//div[./input[@type='text']]").clear();
 		webDriver.findElementByXPath("//input[@type='text']").sendKeys(Config.getInstance().getMs2FirefoxDisplayName());
-//		webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='text']/../div/span[contains(text(),'Search Contacts')]")));
-//		webDriver.findElementByXPath("//input[@type='text']/../div/span[contains(text(),'Search Contacts')]/../..").click();
-//		webDriver.findElementByXPath("//input[@type='text']/../div/span[contains(text(),'Search Contacts')]/../..").sendKeys(firefoxUserDisplayName);
-//		webWait10.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='table-view']//div[@displayname='"+firefoxUserDisplayName+"']")));
+		//		webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='text']/../div/span[contains(text(),'Search Contacts')]")));
+		//		webDriver.findElementByXPath("//input[@type='text']/../div/span[contains(text(),'Search Contacts')]/../..").click();
+		//		webDriver.findElementByXPath("//input[@type='text']/../div/span[contains(text(),'Search Contacts')]/../..").sendKeys(firefoxUserDisplayName);
+		//		webWait10.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='table-view']//div[@displayname='"+firefoxUserDisplayName+"']")));
 		webDriver.findElementByXPath("//div[@class='table-view']//div[@displayname='"+firefoxUserDisplayName+"']").click();
 		webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='icon ion-android-call' and @title='Call']")));
 		webDriver.findElementByXPath("//span[@class='icon ion-android-call' and @title='Call']").click();
-		
+
 		try {
 			webWait30.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Ringing...')]")));		
 			if ( webDriver.findElementByXPath("//span[contains(text(),'Ringing...')]") != null ) {			
@@ -414,11 +414,11 @@ public class MS2_NcoWebClientSanity  extends Base {
 		//Firefoxuser to receive call from Webuser
 		try {
 			foxWait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Incoming call...')]")));
-			
+
 			if ( foxDriver.findElementByXPath("//span[contains(text(),'Incoming call...')]") != null ) {				
 				System.out.println("Firefoxuser Received the HD call from ChromMS2ser");
 			}
-			
+
 			if(foxDriver.findElementByXPath("//button[@title='Accept']") != null) {
 				foxDriver.findElementByXPath("//button[@title='Accept']").click();			
 				System.out.println("Firefoxuser Accepted the call");
@@ -432,7 +432,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 			System.out.println("ERROR -Error occurred while making call from Webuser to Firefoxuser.. ");
 			Assert.assertFalse(true,"ERROR - Error occurred while making call from Webuser to Firefoxuser ");
 		}
-		
+
 		try {
 			WebElement CancelContactSearch = webDriver.findElementByXPath("//div[contains(text(),'Cancel')]");
 			jsweb.executeScript("arguments[0].scrollIntoView();", CancelContactSearch);
@@ -442,7 +442,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 			System.out.println("Unable to cancel the Contact Search from WebUser");	
 			Assert.assertFalse(true,"ERROR - Unable to cancel the Contact Search from WebUser");
 		}
-		
+
 		try {
 			WebElement CancelConversationSearch = foxDriver.findElementByXPath("//div[contains(text(),'Cancel')]");
 			jsfirefox.executeScript("arguments[0].scrollIntoView();", CancelConversationSearch);
@@ -452,104 +452,104 @@ public class MS2_NcoWebClientSanity  extends Base {
 			System.out.println("Unable to cancel the Conversation Search from firefox User");
 			Assert.assertFalse(true,"ERROR - Unable to cancel the Contact Search from WebUser");
 		}
-		
-			
-		
-		
+
+
+
+
 		//=====Second chrome user
 		ChromeDriver chromeDriver = (ChromeDriver) chromeDriverInitialize();
 		WebDriverWait chromeWait120 = new WebDriverWait(chromeDriver, 120);
 		WebDriverWait chromeWait60 = new WebDriverWait(chromeDriver, 60);
 		WebDriverWait chromeWait5 = new WebDriverWait(chromeDriver, 5);
 		WebDriverWait chromeWait10 = new WebDriverWait(chromeDriver, 10);
-		
+
 		JavascriptExecutor jschrome = (JavascriptExecutor) chromeDriver;
 		System.out.println("Login to Second ChromMS2ser...");
 		String anotherchromeWindow = chromeDriver.getWindowHandle();
-				
+
 		rc = NetsfereActivity.webClientLogin(chromeDriver, chromeUserId);		
 		if( rc != 0 ) {
 			System.out.println("ERROR -netsfere Login page Not Loaded. Pls Check Internet Connection...");	        
 			System.out.println("exiting the programe...");
 			webDriver.close();
 			Assert.assertFalse(true,"Unable to login to ChromMS2ser");
-		    System.exit(0);
+			System.exit(0);
 		}		
-		
+
 
 		//******************************
 		// Group Conversation
 		//******************************
 		String groupConversationTitle = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()); 
 		System.out.println("Web User Create group conversation to initiate group call");		
-						
+
 		try {
-				webDriver.findElementByXPath("//span[@class='icon ion-ios-chatbubble']").click();
-				webWait10.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@title='Start Conversation']")));
-				webDriver.findElementByXPath("//button[@title='Start Conversation']").click();
-				webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div/input[contains(@class,'namegenTitleReplace')]")));
-				webDriver.findElementByXPath("//div/input[contains(@class,'namegenTitleReplace')]").click();
-				webDriver.findElementByXPath("//div/input[contains(@class,'namegenTitleReplace')]").sendKeys(groupConversationTitle);		
-				webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@item='inviteContacts']")));
-				webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(firefoxUserDisplayName);	
-				webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(Keys.RETURN);			
-				webWait20.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']//div[4]/div[@displayname='"+firefoxUserDisplayName+"']")));			
-				webDriver.findElementByXPath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']//div[4]/div[@displayname='"+firefoxUserDisplayName+"']").click();
-				Thread.sleep(1000);
-				webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@item='inviteContacts']")));
-				webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(chromeUserDisplayName);	
-				webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(Keys.RETURN);					
-				webWait20.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']//div[4]/div[@displayname='"+chromeUserDisplayName+"']")));			
-				webDriver.findElementByXPath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']//div[4]/div[@displayname='"+chromeUserDisplayName+"']").click();
-				Thread.sleep(1000);					
-				webWait5.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Create')]")));
-				webDriver.findElementByXPath("//span[contains(text(),'Create')]").click();			
-				webWait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='screenOverlayText' and contains(text(),'Creating conversation...')]")));
-				webWait60.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='screenOverlayText' and contains(text(),'Creating conversation...')]")));
+			webDriver.findElementByXPath("//span[@class='icon ion-ios-chatbubble']").click();
+			webWait10.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@title='Start Conversation']")));
+			webDriver.findElementByXPath("//button[@title='Start Conversation']").click();
+			webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div/input[contains(@class,'namegenTitleReplace')]")));
+			webDriver.findElementByXPath("//div/input[contains(@class,'namegenTitleReplace')]").click();
+			webDriver.findElementByXPath("//div/input[contains(@class,'namegenTitleReplace')]").sendKeys(groupConversationTitle);		
+			webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@item='inviteContacts']")));
+			webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(firefoxUserDisplayName);	
+			webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(Keys.RETURN);			
+			webWait20.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']//div[4]/div[@displayname='"+firefoxUserDisplayName+"']")));			
+			webDriver.findElementByXPath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']//div[4]/div[@displayname='"+firefoxUserDisplayName+"']").click();
+			Thread.sleep(1000);
+			webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@item='inviteContacts']")));
+			webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(chromeUserDisplayName);	
+			webDriver.findElementByXPath("//input[@item='inviteContacts']").sendKeys(Keys.RETURN);					
+			webWait20.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']//div[4]/div[@displayname='"+chromeUserDisplayName+"']")));			
+			webDriver.findElementByXPath("//div[@class='mainDiv']//div[2]//div[@class='scrollbox']/div[@class='table-view']//div[4]/div[@displayname='"+chromeUserDisplayName+"']").click();
+			Thread.sleep(1000);					
+			webWait5.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Create')]")));
+			webDriver.findElementByXPath("//span[contains(text(),'Create')]").click();			
+			webWait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='screenOverlayText' and contains(text(),'Creating conversation...')]")));
+			webWait60.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='screenOverlayText' and contains(text(),'Creating conversation...')]")));
 		} catch (Exception e) {
 			System.out.println("Webuser Unable to create Groupconversation .");
 			Assert.assertFalse(true,"ERROR - Webuser Unable to create Groupconversation ");
 		}
-			
+
 		// Check if created Group Conversation Exist.
 		try {
 			webDriver.findElementByXPath("//button[@title='Start Conversation']/../div/input").sendKeys(groupConversationTitle);					
 			webWait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='scrollbox']//div[@class='table-view']/div[2]//div[contains(text(),'"+groupConversationTitle+"')]")));				
 			webDriver.findElementByXPath("//div[@class='scrollbox']//div[@class='table-view']/div[2]//div[contains(text(),'"+groupConversationTitle+"')]").click();				
 		} catch (Exception e) {
-				System.out.println("Webuser Unable to create Groupconversation");
-				Assert.assertFalse(true,"ERROR - Webuser Unable to create Groupconversation ");
+			System.out.println("Webuser Unable to create Groupconversation");
+			Assert.assertFalse(true,"ERROR - Webuser Unable to create Groupconversation ");
 		}
-				
+
 		//**********************
 		// Group Audio Call
 		//**********************
 		System.out.println("Initiate group call from webUser");
-		
+
 		try {
 			if(webDriver.findElementByXPath("//button[@title='Make Call']").isDisplayed()){
 				webDriver.findElementByXPath("//button[@title='Make Call']").click();
 			}
-		
+
 			webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[./span[contains(text(),'Select Ring Participants')]]/../following-sibling::div//button[@title='Place call']")));			
 			webDriver.findElementByXPath("//div[./span[contains(text(),'Select Ring Participants')]]/../following-sibling::div//button[@title='Place call']").click();
-			
+
 			webWait30.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Group Call')]")));
 		} catch ( NoSuchElementException e) {			
 			System.out.println("Webuser unable to initiate group call");
 			Assert.assertFalse(true,"ERROR - Webuser Unable to initiate Group Call ");
 		}
-				
+
 		try {
 			foxWait60.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Incoming call...')]")));			
 			if ( foxDriver.findElementByXPath("//div[contains(text(),'Incoming call...')]") != null ) {	
 				System.out.println("Firefoxuser Received the group call from SecondChromMS2ser");
 			}
-					
+
 			if(foxDriver.findElementByXPath("//button[@title='Accept']") != null) {
 				foxDriver.findElementByXPath("//button[@title='Accept']").click();				
 				System.out.println("Firefoxuser Accepted the call");
-								
+
 			}
 		} catch ( NoSuchElementException e) {		
 			System.out.println("ERROR -Firefox User unable to accept the Group call ");
@@ -561,7 +561,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 			if ( chromeDriver.findElementByXPath("//div[contains(text(),'Incoming call...')]") != null ) {	
 				System.out.println("ChromMS2ser Received the group call from Webuser");
 			}
-					
+
 			if(chromeDriver.findElementByXPath("//button[@title='Accept']") != null) {
 				chromeDriver.findElementByXPath("//button[@title='Accept']").click();				
 				System.out.println("ChromMS2ser Accepted the call");								
@@ -570,9 +570,9 @@ public class MS2_NcoWebClientSanity  extends Base {
 			System.out.println("ERROR - chrome User unable to accept the Group call ");
 			Assert.assertFalse(true,"ERROR - chrome User unable to accept the Group call ");
 		}		
-						
+
 		System.out.println("End Group call");			
-				
+
 		try{
 			Thread.sleep(5000);
 			webWait10.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='table-view']//..//button[@title='End call']")));
@@ -582,12 +582,12 @@ public class MS2_NcoWebClientSanity  extends Base {
 			webDriver.findElementByXPath("//div[./div[contains(text(),'End or leave group call?')]]//div/button//span[contains(text(),'End Group Call')]").click();			
 			webWait10.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[./div[contains(text(),'End or leave group call?')]]")));
 			webWait30.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[contains(text(),'Group Call')]")));			
-			
+
 		} catch(Exception e){
 			System.out.println("Unable to end group call");
 			Assert.assertFalse(true,"ERROR - Webuser Unable to end group call ");
 		}
-				
+
 		webDriver.findElementByXPath("//span[@class='icon ion-ios-chatbubble']").click();
 		//Webuser leaves the conversation		
 		if ( NetsfereActivity.destroyConversation(webDriver, groupConversationTitle) ==0 ) {
@@ -595,79 +595,79 @@ public class MS2_NcoWebClientSanity  extends Base {
 		} else {
 			System.out.println("webuser Destroyed conversation Failed :"+conversationTitle );			
 		}	
-//		if ( NetsfereActivity.destroyConversation(webDriver, conversationTitle) ==0 ) {
-//			System.out.println("webuser Destroyed conversation :"+conversationTitle );			
-//		} else {
-//			System.out.println("webuser Destroyed conversation Failed :"+conversationTitle );			
-//		}
-		
+		//		if ( NetsfereActivity.destroyConversation(webDriver, conversationTitle) ==0 ) {
+		//			System.out.println("webuser Destroyed conversation :"+conversationTitle );			
+		//		} else {
+		//			System.out.println("webuser Destroyed conversation Failed :"+conversationTitle );			
+		//		}
+
 		try {
-		if ( NetsfereActivity.WebLogout(webDriver) ==0 ) {
-			System.out.println("ChromMS2ser logged out.");
-			webDriver.quit();
-		} else {
-			System.out.println("ChromMS2ser logged out failed.");
-			webDriver.quit();
-		}	
-		if( foxDriver != null ) {
-			foxDriver.quit();
-		}
-		
-		if( chromeDriver != null ) {
-			chromeDriver.quit();
-		}
+			if ( NetsfereActivity.WebLogout(webDriver) ==0 ) {
+				System.out.println("ChromMS2ser logged out.");
+				webDriver.quit();
+			} else {
+				System.out.println("ChromMS2ser logged out failed.");
+				webDriver.quit();
+			}	
+			if( foxDriver != null ) {
+				foxDriver.quit();
+			}
+
+			if( chromeDriver != null ) {
+				chromeDriver.quit();
+			}
 		} catch (Exception e) {
 			System.out.println("Unable to logout");
 		}
-		
-			HashMap<String , Integer> MS2Vault_NewData_map = new HashMap<String, Integer>();	
-			MS2Vault_NewData_map = NetsfereActivity.getVaultData(MS2VaultId);
-			if(MS2Vault_NewData_map.get("RC")  == 0  || MS2Vault_NewData_map.get("RC")  == 2) {
-					System.out.println("Conversations Acrchived Count :" + MS2Vault_NewData_map.get("ConvCount"));
-					System.out.println("Message Archive Count :"+MS2Vault_NewData_map.get("MesgCount"));
-					System.out.println("Report Generated Count :"+MS2Vault_NewData_map.get("ReportCount") );
-//					System.out.println("Used Storage in MB :"+MS2Vault_NewData_map.get("UsedStorage"));
-					if(MS2Vault_NewData_map.get("RC")  == 2 ) {
-						System.out.println("Error in Logging out from Vault...");
-					}
-			} else if (MS2Vault_NewData_map.get("RC")  == 1 ) { 
-				System.out.println("Error in acccessing Vault....");
+
+		HashMap<String , Integer> MS2Vault_NewData_map = new HashMap<String, Integer>();	
+		MS2Vault_NewData_map = NetsfereActivity.getVaultData(MS2VaultId);
+		if(MS2Vault_NewData_map.get("RC")  == 0  || MS2Vault_NewData_map.get("RC")  == 2) {
+			System.out.println("Conversations Acrchived Count :" + MS2Vault_NewData_map.get("ConvCount"));
+			System.out.println("Message Archive Count :"+MS2Vault_NewData_map.get("MesgCount"));
+			System.out.println("Report Generated Count :"+MS2Vault_NewData_map.get("ReportCount") );
+			//					System.out.println("Used Storage in MB :"+MS2Vault_NewData_map.get("UsedStorage"));
+			if(MS2Vault_NewData_map.get("RC")  == 2 ) {
+				System.out.println("Error in Logging out from Vault...");
 			}
-			
-			if ( MS2Vault_NewData_map.get("MesgCount") > MS2Vault_OldData_map.get("MesgCount") ) {
-				System.out.println("MS2 Archived message count has increased...");
-				System.out.println("MS2 Vault test Case is success.");
-			} else {
-				System.out.println("No Increase in MS2 Archived message count ...");
-				System.out.println("MS2 Vault test Case is Failed.");
-			}
-			if ( MS2Vault_NewData_map.get("ConvCount") > MS2Vault_OldData_map.get("ConvCount")) {
-				System.out.println("MS2 Archived COnversations count has increased...");
-			} else {
-				System.out.println("No Increase in MS2 Archived COnversations count ...");
-			}		
-//			if (MS2Vault_NewData_map.get("ReportCount") > MS2Vault_OldData_map.get("ReportCount")) {
-//				System.out.println("MS2 Archive Reports Generated count has increased...");			
-//			} else {
-//				System.out.println("No Increase in MS2 Vault Reports count...");
-//			}
-//			if ( MS2Vault_NewData_map.get("UsedStorage")> MS2Vault_OldData_map.get("UsedStorage")) {
-//				System.out.println("MS2 Vault Storage Usage Increased ....");
-//			} else {
-//				System.out.println("NO Increase in MS2 Vault Storage Usage...");
-//			}
-			
-			System.out.println("TIme at the END of the Test Execution : " + ( new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss").format(new java.util.Date())));
-			System.out.println("************* MS2 REGION | Vault check | SUCCESS ************");
-			
-			
-		}	
-	
+		} else if (MS2Vault_NewData_map.get("RC")  == 1 ) { 
+			System.out.println("Error in acccessing Vault....");
+		}
+
+		if ( MS2Vault_NewData_map.get("MesgCount") > MS2Vault_OldData_map.get("MesgCount") ) {
+			System.out.println("MS2 Archived message count has increased...");
+			System.out.println("MS2 Vault test Case is success.");
+		} else {
+			System.out.println("No Increase in MS2 Archived message count ...");
+			System.out.println("MS2 Vault test Case is Failed.");
+		}
+		if ( MS2Vault_NewData_map.get("ConvCount") > MS2Vault_OldData_map.get("ConvCount")) {
+			System.out.println("MS2 Archived COnversations count has increased...");
+		} else {
+			System.out.println("No Increase in MS2 Archived COnversations count ...");
+		}		
+		//			if (MS2Vault_NewData_map.get("ReportCount") > MS2Vault_OldData_map.get("ReportCount")) {
+		//				System.out.println("MS2 Archive Reports Generated count has increased...");			
+		//			} else {
+		//				System.out.println("No Increase in MS2 Vault Reports count...");
+		//			}
+		//			if ( MS2Vault_NewData_map.get("UsedStorage")> MS2Vault_OldData_map.get("UsedStorage")) {
+		//				System.out.println("MS2 Vault Storage Usage Increased ....");
+		//			} else {
+		//				System.out.println("NO Increase in MS2 Vault Storage Usage...");
+		//			}
+
+		System.out.println("TIme at the END of the Test Execution : " + ( new SimpleDateFormat("yyyy:MM:dd-HH:mm:ss").format(new java.util.Date())));
+		System.out.println("************* MS2 REGION | Vault check | SUCCESS ************");
+
+
+	}	
+
 
 	@SuppressWarnings("unchecked")
 	@JsonPropertyOrder({"email","password"})
 	@Test(priority=6)
-	
+
 	public void Netsfere_MS2_API() throws FileNotFoundException {
 		RestAssured.baseURI ="https://api.netsfere.com";
 		RequestSpecification APIRequest = RestAssured.given();
@@ -684,7 +684,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 		String  chromeUserDisplayName = "";
 		String  firefoxUserId = "";
 		String  firefoxUserDisplayName = "";
-		
+
 		if( Config.getInstance().isDebug()) {
 			webUserId = Config.getInstance().getMs2WebIdTest();
 			webUserDisplayName = Config.getInstance().getMs2WebDisplayNameTest();
@@ -692,7 +692,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 			chromeUserDisplayName = Config.getInstance().getMs2ChromeDisplayNameTest();
 			firefoxUserId =  Config.getInstance().getMs2FirefoxIdTest();
 			firefoxUserDisplayName = Config.getInstance().getMs2FirefoxDisplayNameTest();
-			
+
 		} else {
 			webUserId = Config.getInstance().getMs2WebId();
 			webUserDisplayName = Config.getInstance().getMs2WebDisplayName();
@@ -741,7 +741,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 
 		System.out.println("Created COnversation ID :"+RC_convId);
 		System.out.println("Message sent Message ID :"+RC_msgId);
-		
+
 		Assert.assertNotEquals(RC_convId, null);
 		Assert.assertNotEquals(RC_msgId, null);
 
@@ -773,7 +773,7 @@ public class MS2_NcoWebClientSanity  extends Base {
 		System.out.println(response.asString());
 		statusCode = response.getStatusCode();
 		System.out.println("Return Code :"+statusCode);
-		
+
 		if ( statusCode != 200) {
 			String errorMsg = response.getStatusLine();
 			System.out.println("error Message  : "+errorMsg);
@@ -784,232 +784,12 @@ public class MS2_NcoWebClientSanity  extends Base {
 
 		System.out.println("Created COnversation ID :"+RC_convId);
 		System.out.println("Message sent Message ID :"+RC_msgId);
-		
+
 		Assert.assertNotEquals(RC_convId, null);
 		Assert.assertNotEquals(RC_msgId, null);
 		Assert.assertEquals(statusCode, 200);
-		
-	}
-
-		
-//	
-	@Test(priority=2)
-		public void Netsfere_URL_HealthCheck() throws FileNotFoundException {
-	
-//		RequestSpecification httpRequest = RestAssured.given();
-		
-		HashMap<String , String> Server_URL_Map = new HashMap<String, String>();
-		HashMap<String, List<String>> URL_RESPONSE = new HashMap<String, List<String>>();
-		
-		Server_URL_Map.put("webUrl" , Config.getInstance().getwebUrl());
-		Server_URL_Map.put("anchorUrl" , Config.getInstance().getAnchorUrl());
-		Server_URL_Map.put("liveusUrl" , Config.getInstance().getliveusUrl());
-		Server_URL_Map.put("liveeuUrl" , Config.getInstance().getliveeuUrl());
-		Server_URL_Map.put("ms2VaultUrl" , Config.getInstance().getms2VaultUrl());
-		Server_URL_Map.put("eu1VaultUrl" , Config.getInstance().geteu1VaultUrl());
-		Server_URL_Map.put("apseVaultUrl" , Config.getInstance().getapseVaultUrl());
-		Server_URL_Map.put("acpUrl" , Config.getInstance().getacpUrl());
-		Server_URL_Map.put("ms2Url" , Config.getInstance().getms2Url());
-		Server_URL_Map.put("eu1Url" , Config.getInstance().geteu1Url());
-		Server_URL_Map.put("apse1Url" , Config.getInstance().getapse1Url());
-		Server_URL_Map.put("ms7Url" , Config.getInstance().getms7Url());
-		Server_URL_Map.put("ms1Url" , Config.getInstance().getms1Url());
-		Server_URL_Map.put("umrUrl" , Config.getInstance().getumrUrl());
-		Server_URL_Map.put("dimasUrl" , Config.getInstance().getdimasUrl());
-		Server_URL_Map.put("mriUrl" , Config.getInstance().getmriUrl());
-		Server_URL_Map.put("NstUrl" , Config.getInstance().getNstUrl());
-		Server_URL_Map.put("SignupUrl" , Config.getInstance().getSignupUrl());	
-		Server_URL_Map.put("DesktopClientUrl" , Config.getInstance().getDesktopClientUrl());
-		Server_URL_Map.put("UKFUrl",Config.getInstance().getUKFUrl());
-		Server_URL_Map.put("HelpUrl",Config.getInstance().getHelpUrl());
-		Server_URL_Map.put("AM1Url",Config.getInstance().getAM1Url());
-		
-		URL_RESPONSE = NetsfereActivity.Netsfere_URL_HealthCheck(Server_URL_Map);
-		List<String> response_data = new  ArrayList<String>();
-		for( String ServerLabel : URL_RESPONSE.keySet()) {
-			response_data = URL_RESPONSE.get(ServerLabel);
-			
-			if( ServerLabel == "webUrl") {
-				System.out.println("web.netsfere.com url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of web.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of web.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact netsfere web client, please check..!!");
-				}
-			}  else if (ServerLabel == "anchorUrl" )  {
-				System.out.println("https://anchor.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of anchor.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of anchor.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact anchor.netsfere.com, please check..!!");
-				}
-			}  else if (ServerLabel == "liveusUrl" )  {
-				System.out.println("https://live.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of live.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of live.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact live.netsfere.com, please check..!!");
-					
-				}
-			} else if (ServerLabel == "liveeuUrl" )  {
-				System.out.println("https://live-eu1.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of live-eu1.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of live-eu1.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact live-eu1.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "ms2VaultUrl" )  {
-				System.out.println("https://vault.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of vault.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of vault.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact vault.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "eu1VaultUrl" )  {
-				System.out.println("https://vault-eu1.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of vault-eu1.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of vault-eu1.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact vault-eu1.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "apseVaultUrl" )  {
-				System.out.println("https://vault-apse1.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of vault-apse1.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of vault-apse1.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact vault-apse1.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "acpUrl" )  {
-				System.out.println("https://admin.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of admin.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of admin.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact admin.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "ms2Url" )  {
-				System.out.println("https://ms2.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of ms2.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of ms2.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact ms2.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "eu1Url" )  {
-				System.out.println("https://eu1.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of eu1.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of eu1.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact eu1.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "apse1Url" )  {
-				System.out.println("https://apse1.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of apse1.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of apse1.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact apse1.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "ms7Url" )  {
-				System.out.println("https://ms7.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of ms7.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of ms7.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact ms7.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "ms1Url" )  {
-				System.out.println("https://ms7.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of ms1.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of ms1.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact ms1.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "umrUrl" )  {
-				System.out.println("https://umr.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of umr.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of umr.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact umr.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "dimasUrl" )  {
-				System.out.println("https://dimas.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of dimas.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of dimas.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact dimas.netsfere.com, please check..!!");
-				}
-			} else if (ServerLabel == "mriUrl" )  {
-				System.out.println("https://mri.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of mri.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of mri.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact mri.netsfere.com, please check..!!");
-				}
-			} else if(ServerLabel == "NstUrl" )  {
-				System.out.println("https://www.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of www.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of www.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact www.netsfere.com, please check..!!");
-				}
-			} else if(ServerLabel == "SignupUrl" )  {
-				System.out.println("https://signup.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of signup.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of signup.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact signup.netsfere.com, please check..!!");
-				}
-			} else if(ServerLabel == "AM1Url" )  {
-				System.out.println("https://am1.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of signup.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of signup.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact https://am1.netsfere.com, please check..!!");
-				}
-			} else if(ServerLabel == "HelpUrl" )  {
-				System.out.println("https://help.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of signup.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of signup.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact https://help.netsfere.com, please check..!!");
-				}
-			} else if(ServerLabel == "UKFUrl" )  {
-				System.out.println("https://ukf.netsfere.com  url test.");
-				if(response_data != null ) {
-					System.out.println("The status code of signup.netsfere.com is=" + " " + response_data.get(1));
-					System.out.println("The status line of signup.netsfere.com is=" + " " +response_data.get(2) );
-				} else {
-					System.out.println("ERROR- Unable to contact https://ukf.netsfere.com, please check..!!");
-				}
-			} 
-			
-		}
-		
-		for( String ServerLabel : URL_RESPONSE.keySet()) {
-			response_data = URL_RESPONSE.get(ServerLabel);
-			Assert.assertNotNull(response_data);
-			Assert.assertEquals(response_data.get(0) , "PASS" , response_data.get(2));
-		}
-			
-		
-			System.out.println("************* MS2-EU REGION | URL's health check | SUCCESS ************");
 
 	}
+
+
 }
