@@ -395,8 +395,8 @@ public class AM1_NcoWebClientSanity extends Base {
 //		webDriver.findElementByXPath("//span[@class='material-icons' and contains(text(),'search')]/../../..//input").sendKeys(Config.getInstance().getAM1FirefoxDisplayName());
 		webWait10.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='table-view']//div[@displayname='"+firefoxUserDisplayName+"']")));
 		webDriver.findElementByXPath("//div[@class='table-view']//div[@displayname='"+firefoxUserDisplayName+"']").click();
-		webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='icon ion-android-call' and @title='Call']")));
-		webDriver.findElementByXPath("//span[@class='icon ion-android-call' and @title='Call']").click();
+		webWait5.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[./div[@class='click-ripple']/following-sibling::span[@class='icon ion-android-call']]")));
+		webDriver.findElementByXPath("//button[./div[@class='click-ripple']/following-sibling::span[@class='icon ion-android-call']]").click();
 		
 		try {
 			webWait30.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Ringing...')]")));		
