@@ -369,6 +369,8 @@ public class NetsfereActivity  extends Base{
 				vaultDriver.get(Config.getInstance().geteu1VaultUrl());
 			} else if(vaultId.contains("apse")) {
 				vaultDriver.get(Config.getInstance().getapseVaultUrl());				
+			} else if ( vaultId.contains("am1")) {
+				vaultDriver.get(Config.getInstance().geteppdVaultUrl());
 			} else {
 				vaultDriver.get(Config.getInstance().getms2VaultUrl());
 			}
