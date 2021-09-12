@@ -418,7 +418,7 @@ public class NetsfereActivity  extends Base{
 		//	Vault_data_map.put("UsedStorage", Integer.parseInt(usedStorage.replace("Mb", "")));
 
 		try {
-			vaultDriver.findElementByXPath("//ul[@class='nav nav-pills flex-column py-3']/li[7]//span").click();
+			vaultDriver.findElementByXPath("//i[@class='fa fa-sign-out pr-3']/following-sibling::span[contains(text(),'Sign Out')]").click();
 			vaultWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='button' and text()='Sign Out']"))).click();
 			System.out.println("Logged out of vault...");
 			vaultDriver.quit();
